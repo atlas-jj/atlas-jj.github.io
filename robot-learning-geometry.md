@@ -1,5 +1,4 @@
 layout: page
-usemathjax: true
 title: "Learning Geometry and Spatial Sense from Vision for General-purpose Robots"
 permalink: /robot-learning-geometry/
 
