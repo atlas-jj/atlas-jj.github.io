@@ -5,13 +5,13 @@ title: "robot learning geometry"
 main_title: "Learning Geometry and Spatial Sense from Vision for General-purpose Robots"
 permalink: /robot-learning-geometry/
 ---
-<h1>Learning Geometry and Spatial Sense from Vision for General-purpose Robots</h1>
+<center> 
 
-# Learning Geometry and Spatial Sense from Vision for General-purpose Robots
+###### Jun Jin &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;  _Feb 1, 2021_
+</center>
+
+
+
 
 $$X_{1}^{2}$$
 
-asdfasfdasdf
-
-
-asfasdf
