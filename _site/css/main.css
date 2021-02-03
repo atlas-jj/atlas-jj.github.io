@@ -11,8 +11,8 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #111;
+  font: 400 16px/1.5 "Merriweather", "PT Serif", Georgia, "Times New Roman", serif;
+  color: #333;
   background-color: #fdfdfd;
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: "kern" 1;
@@ -71,7 +71,7 @@ a {
   a:visited {
     color: #1756a9; }
   a:hover {
-    color: #111;
+    color: #333;
     text-decoration: underline; }
 
 /**
@@ -169,7 +169,7 @@ pre {
   .site-nav .menu-icon {
     display: none; }
   .site-nav .page-link {
-    color: #111;
+    color: #333;
     line-height: 1.5; }
     .site-nav .page-link:not(:last-child) {
       margin-right: 20px; }
