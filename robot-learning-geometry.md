@@ -254,9 +254,10 @@ that selects connections between functional parts of objects, as an invariant ta
 
 <img src= "{{ BASE_PATH }}/assets/images/chapter5_optimization.png" alt="chapter5_optimization" class="center"/>
 
-We proposed approach utilize the __"Expert Orderness Assumption on Categorial Objects"__: Given several human demonstration videos of performing 
-the same task but with categorical objects: (1) the temporal order of frame transitions of each video near-optimally defines the task, 
-(2) the task descriptor $$\mathbf{Z}^{\mathbb{G}}_{i}$$ of each video stays consistent, where $$\mathbb{G}$$ defines the prior geometry structure.
+We propose an approach utilizing the __"Expert Orderness Assumption on Categorial Objects"__ defined as: Given several human demonstration videos of performing 
+the same task but with categorical objects:
+- (1) the temporal order of frame transitions of each video near-optimally defines the task, 
+- (2) the task descriptor $$\mathbf{Z}^{\mathbb{G}}_{i}$$ of each video stays consistent, where $$\mathbb{G}$$ defines the prior geometry structure.
 
 
 ![sapien]({{ BASE_PATH }}/assets/images/sapien.png)
