@@ -44,10 +44,11 @@ nor enough attention has been given to the problem of task specification.
 The goal of the research presented is to use structured priors and representation learning to encode _what_ is a task, 
 with which a task can be generally parameterized, monitored and controlled. 
 This problem, which we call __robotic task representation learning__ that involves studying 
-- (1) how a task-relevant representation should be structured
-and learned from raw image inputs?
-- (2) how such representation enables easier controller design, provides task monitoring? 
-- (3) how representational invariance further enables generalizable robot learning across different environments and categorical objects?
+- (1) What structured priors should be introduced to represent a task that enables general task specification.
+- (2) How a task-relevant representation should be structured
+and learned from raw image inputs.
+- (3) How such representation enables easier controller design, provides task monitoring. 
+- (4) How representational invariance further enables generalizable robot learning across different environments and categorical objects.
 
 For example, by introducing a geometry structured task prior, 
 a screwing task's representation encoding $$Z_{t}$$ stays consistent regardless of types of screw driver or screws since the task can be invariantly 
