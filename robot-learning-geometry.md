@@ -6,7 +6,7 @@ main_title: "Learning Geometry and Spatial Sense from Vision for Robotic Manipul
 permalink: /robot-learning-geometry/
 ---
 
-<h6 class='page-author'>Jun Jin &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;  Feb 1, 2021</h6>
+<h6 class='page-author'>Jun Jin &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;  Feb 8, 2021</h6>
 
 <!---
 ![GSD1 phenotype]({{ BASE_PATH }}/assets/images/chapter_1_intro.png)
@@ -38,23 +38,38 @@ neural task programmers [[7]](#c7) and so on [[8]](#c8)[[9]](#c9)[[10]](#c10).
 Unfortunately, none of these have a thorough study on their capability to define "_what_", 
 nor enough attention has been given to the problem of task specification.
 
-Generally, there are two ways of task specification tools used by humans and applied in 
-robotics:
+
+<img src= "{{ BASE_PATH }}/assets/images/overview2.png" alt="overview2" class="center" style="width:90%;"/>
+
+The goal of the research presented is to use structured priors and representation learning to encode _what_ is a task, 
+with which a task can be generally parameterized, monitored and controlled. 
+This problem, which we call __robotic task representation learning__, involves studying 
+- (1) how a task-relevant representation should be structured
+and learned from raw image inputs, and
+- (2) how such representation enables easier controller design, provides task monitoring and 
+- (3) how representational invariance further enables generalizable robot learning across different environments and categorical objects. 
+
+For example, by introducing a geometry structured task prior, 
+a screwing task's representation encoding $$Z_{t}$$ stays consistent regardless of types of screw driver or screws since the task can be invariantly 
+defined as a relationship between tooltip and the screw top.
+
+
 <img src= "{{ BASE_PATH }}/assets/images/human_task_specification.png" alt="human_task_specification" class="center"/>
 
-- (1): A __semantic structure__ that describes attributes of tools and objects, 
-how an action should be applied and how a task sequence should be organized. For example, a pizza
-recipe defines the task of making different flavored pizzas. In robotics, this approach is intensively studied in ontology and affordance based
-methods[[11]](#c11). A typical challenge is how to ground a semantic task plan to robot actions without hand engineering each motion primitives. 
-  
-- (2): A __geometric structure__ that describes objects spatial relationships, 
-or in a more fine-grained way---geometric constraints (coincidence, parallel, perpendicular, 
-collinear, coplanar) between object parts[[12]](#c12)[[13]](#c13)[[14]](#c14)[[15]](#c15), 
-or in a more complex way---chaining those geometric connections[[16]](#c16) to describe complex tasks like assembly a tenon structure without any nails. 
-Compared to semantics based ones, using a geometry and spatial sense based structure provide task decidability, diagnosability and controllability, which we will explain in the thesis.
-Moreover, considering tools and objects in household and factory environments are typically 
-in regular shapes, using geometry and spatial sense as an inductive bias in robot learning should be applicable 
-in a large range of applications. However, this approach is __rarely studied__.
+Human empirically has a good sense of "what is the task", as studied in observational learning[[20]](#c20) in psychology, 
+the rapid grasp of task concept by simply watching adults or peers during a human infant's cognitive developmental process is astonishing. 
+Generally, there are two types of structures for task specification used by humans: 
+- (1) A semantic structure that conceptually describes how a task should be organized, for example a recipe defines how to make a pizza. 
+- (2) A geometric structure that solidly defines spatial information of a task, for example a tenon assembly task without any nails. 
+
+Similarly, the above two structures are applied in robotic research. The semantic approach is intensively studied in ontology and affordance based methods[[11]](#c11) which describe a task in a tree of 
+graph structure based on objects,  attributes and their functionalities. 
+However, the mapping from semantic task concepts to robot actions without hand-engineered motion primitives remains challenging. 
+The geometric approach[[12]](#c12)[[13]](#c13), as a comparison, defines a task by object spatial relationships, geometric constraints 
+(point-coincidence, line-parallel, etc.) and their chaining to construct more complex tasks[[16]](#c16). 
+Besides the advantage of task interpretability, it provides a way to monitor task execution and relates directly to 
+robot control as studied in visual servoing[[19]](#c19). However, this approach is __rarely studied__.
+
 
 #### __Making Sense of Vision by Visual Feature Connections__
 
@@ -70,7 +85,7 @@ and collision avoidance tasks.
 __The theme of this research__ is to introduce geometry and spatial sense as a structured task representation in robot learning, for the purpose of improving 
 state-of-art robotic task specification capabilities.
 
-#### __Learning Geometry and Spatial Sense from Vision__
+## 2. Learning Geometry and Spatial Sense from Vision
 
 So far, we've discussed general ideas of representing a robotic task based on geometry and spatial sense, which are essentially making feature connections as discussed above.
 To ground our discussion, three questions arise:
@@ -78,6 +93,8 @@ To ground our discussion, three questions arise:
 - (2): how to relate such parameterization to a task definition in an unsupervised manner, without human annotated samples; 
 - (3): what benefits will such structured task representation bring to us, regarding learning efficiency, generalization, intepretability and so on. 
 
+
+<img src= "{{ BASE_PATH }}/assets/images/Our_approach.png" alt="Our_approach" class="center" style="width: 90%;"/>
 In this research, we propose a series of unsupervised learning methods to directly learn task 
 representation from 3rd-view human demonstration videos. Through examples of various manipulation tasks, we prove introducing geometry structure in robot learning will largely
 reduce needed human demonstrations, improving learning efficiency, showing better generalization performance, and the learned geometric task repressentation provides decidability,
@@ -85,7 +102,7 @@ diagnosability and controllability.
 
 <br/>
 
-## 2. Learning Object Level Spatial Sense
+## 3. Learning Object Level Spatial Sense
 
 <img src= "{{ BASE_PATH }}/assets/images/chapter3_overview.png" alt="chapter3_overview" class="center"/>
 
@@ -127,16 +144,17 @@ So how it works? In the above stacking blocks task, results show that learning a
 human demonstration video samples, and exhibits strong generalization performance regarding task/environment changes.
 
 
-<img src= "{{ BASE_PATH }}/assets/images/chapter3_vis_encoding.png" alt="chapter3_vis_encoding" class="center"/>
+<img src= "{{ BASE_PATH }}/assets/images/chapter3_vis_encoding.png" alt="chapter3_vis_encoding" class="center" style="width:80%;"/>
 
 Lastly, we examine what exactly has the spatial task encoder learned. We visualize the learned spatial task encoding by collecting samples from a human 
-kinesthetic teaching process, then visualize the norm of spatial task encoding output using a color map. The figure above shows the colored sphere indicating
+kinesthetic teaching process, then visualize the norm of spatial task encoding output $$R_{t}$$ using a color map. The figure above shows the colored sphere indicating
 a tendency towards the 3D target.
 
+<img src= "{{ BASE_PATH }}/assets/images/system_overview3.png" alt="system_overview3" class="center" />
+The above figure shows a systematical view of how a spatial task encoder is learned and how to apply the output $$R_{t}$$ in a closed-loop controller.
 
 
-
-## 3. Learning Geometry Skills
+## 4. Learning Geometry Skills
 
 Successively, we explore further from learning object-level spatial sense to a more fine-grained task representation framework---using geometric constraints, 
 i.e., connections between geometric features / primitives, which we refer as geometry skills. This approach of robotic task representation was originally studied in 
@@ -213,7 +231,7 @@ from the selected top feature connections. To do this, we had the robot perform 
 optimizing the encoder, selector to produce "good" control signals.
 
 
-## 4. Learning Invariant Task Descriptors
+## 5. Learning Invariant Task Descriptors
 
 ![chapter5_invariant_geometry_small]({{ BASE_PATH }}/assets/images/chapter5_invariant_geometry_small.png)
 
@@ -265,9 +283,8 @@ the same task but with categorical objects:
 To evaluate our proposed method, we design a table organization task in a Sapien simulator[[17]](#c17). The task is to organize messy items on a table in a neat way. It was 
 firstly introduced in IROS 2020 as a manipulation challenge called "Open Cloud Robot Table Organization Challenge" (OCRTOC)[[18]](#c18). In OCRTOC, an organization task is defined by specifying 
 each object's target pose w.r.t. the table, which is quite cumbersome. In this work, we change it to a more natural setting: human demonstrate the organization task using different object
-instances, robot is requried to learn the task that generalizes to categorical objects.
-
-
+instances, robot is requried to learn the task that generalizes to categorical objects. Under this new setting, the robot is required to organize books, mugs in a neat way 
+regardless of what books or mugs it is manipulating. As a result, it's suitable for the study of categorical object generalization.
 
 ## References
 <a id="c1">[1]</a> 
@@ -329,3 +346,9 @@ UCSD. Sapien project, "https://sapien.ucsd.edu/", 2020.
 
 <a id="c18">[18]</a>
 OCRTOC. Open cloud robot table organization challenge (ocrtoc), "http://www.ocrtoc.org/", 2020.
+
+<a id="c19">[19]</a>
+Hutchinson, Seth, Gregory D. Hager, and Peter I. Corke. "A tutorial on visual servo control." IEEE transactions on robotics and automation 12.5 (1996): 651-670.
+
+<a id="c20">[20]</a>
+Burke, Christopher J., et al. "Neural mechanisms of observational learning." Proceedings of the National Academy of Sciences 107.32 (2010): 14431-14436.
