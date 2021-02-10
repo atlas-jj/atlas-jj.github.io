@@ -18,8 +18,10 @@ permalink: /robot-learning-geometry/introduction/
 <br>
 
 ## 1. Introduction
+One characteristic of robotic task learning that differs from computer vision or natural language processing, 
+is that defining _"what is the task"_ per se is typically more difficult than task objectives like object detection or text classification.
 
-Currently, we have very limited options in our toolbox to define "_what_", 
+In fact, we have very limited options in our toolbox to define "_what_", 
 including task function in early works [[1]](#c1)[[2]](#c2), reward function in reinforcement learning [[3]](#c3)[[4]](#c4), 
 behavior cloning in imitation learning [[5]](#c5), 
 and hierarchical approaches like inferring task goals in zero-shot imitation learning [[6]](#c6), task planning in
