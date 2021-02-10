@@ -16,6 +16,13 @@
   <link rel="alternate" type="application/rss+xml" title="Robot Learning Geometry" href="http://yourdomain.com/feed.xml">
   <!-- for mathjax support -->
     
+      <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+        });
+      </script>
+      <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 </head>
 
 
@@ -337,6 +344,7 @@ the same task but with categorical objects:</p>
 </ul>
 
 <h4 id="53--evaluation"><strong>5.3  Evaluation</strong></h4>
+
 <p><img src="/assets/images/sapien.png" alt="sapien" /></p>
 
 <p>To evaluate our proposed method, we design a table organization task in a Sapien simulator<a href="#c17">[17]</a>. The task is to organize messy items on a table in a neat way. It was 

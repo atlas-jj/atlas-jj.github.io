@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Proposal"
+usemathjax: true
 main_title: "Learning Geometry and Spatial Sense from Vision for Robotic Manipulation"
 permalink: /robot-learning-geometry/proposal/
 ---
@@ -275,7 +276,9 @@ the same task but with categorical objects:
 - (1) the temporal order of frame transitions of each video near-optimally defines the task, 
 - (2) the task descriptor $$\mathbf{Z}^{\mathbb{G}}_{i}$$ of each video stays consistent, where $$\mathbb{G}$$ defines the prior geometry structure.
 
+
 #### __5.3  Evaluation__
+
 ![sapien]({{ BASE_PATH }}/assets/images/sapien.png)
 
 To evaluate our proposed method, we design a table organization task in a Sapien simulator[[17]](#c17). The task is to organize messy items on a table in a neat way. It was 
