@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Tutorial</title>
+  <title>Proposal</title>
   <meta name="description" content="Welcome to our site!
 ">
 
@@ -43,15 +43,7 @@
           
         
           
-          <a class="page-link" href="/robot-learning-geometry/introduction/">Introduction</a>
-          
-        
-          
-          <a class="page-link" href="/robot-learning-geometry/tutorial/">Tutorial</a>
-          
-        
-          
-          <a class="page-link" href="/robot-learning-geometry/proposal/">Proposal</a>
+          <a class="page-link" href="/robot-learning-geometry/tutorial/">Proposal</a>
           
         
           
@@ -81,6 +73,103 @@
 <a href="/robot-learning-geometry/">Cover Page</a> &nbsp;| &nbsp;  <a href="/robot-learning-geometry/introduction/">Introduction</a> &nbsp; | &nbsp;  <a href="/robot-learning-geometry/tutorial" class="active_href">Tutorial</a>&nbsp;| &nbsp;  <a href="/robot-learning-geometry/proposal">Proposal</a>
 </div>
 <h6 class="page-author">Jun Jin <br /> Robotics &amp; Vision Lab, Computing Science, University of Alberta</h6>
+
+<p><br />
+<img src="/assets/images/cover_image.png" alt="GSD1 phenotype" /></p>
+
+<p><br /></p>
+
+<blockquote>
+  <p>'’Learn how to see. Realize that everything connects to everything else.” <br /> — Leonardo da Vinci</p>
+</blockquote>
+
+<p><br /></p>
+
+<h2 id="1-introduction">1. Introduction</h2>
+
+<p>One characteristic of robotic task learning that differs from learning tasks in computer vision (CV) or 
+natural language processing (NLP), is that defining “<em>what is the task</em>” per se is typically more 
+difficult than task objectives like object detection or text classification.</p>
+
+<p>In fact, we have very limited options in our toolbox to define “<em>what</em>”, 
+including task function in early works <a href="#c1">[1]</a><a href="#c2">[2]</a>, reward function in reinforcement learning <a href="#c3">[3]</a><a href="#c4">[4]</a>, 
+behavior cloning in imitation learning <a href="#c5">[5]</a>, 
+and hierarchical approaches like inferring task goals in zero-shot imitation learning <a href="#c6">[6]</a>, task planning in
+neural task programmers <a href="#c7">[7]</a> and so on <a href="#c8">[8]</a><a href="#c9">[9]</a><a href="#c10">[10]</a>. 
+Unfortunately, none of these have a thorough study on their capability to define “<em>what</em>”, 
+nor enough attention has been given to the problem of task specification.</p>
+
+<p><img src="/assets/images/overview2.png" alt="overview2" class="center" style="width:90%;" /></p>
+
+<p>The goal of the research presented is to use structured priors and representation learning to encode <em>what</em> is a task, 
+with which a task can be generally parameterized, monitored and controlled. 
+This problem, which we call <strong>robotic task representation learning</strong> that involves studying</p>
+<ul>
+  <li>(1) What structured priors should be introduced to represent a task that enables general task specification.</li>
+  <li>(2) How a task-relevant representation should be structured
+and learned from raw image inputs.</li>
+  <li>(3) How such representation enables easier controller design, provides task monitoring.</li>
+  <li>(4) How representational invariance further enables generalizable robot learning across different environments and categorical objects.</li>
+</ul>
+
+<p>For example, by introducing a geometry structured task prior, 
+a screwing task’s representation encoding <script type="math/tex">Z_{t}</script> stays consistent regardless of types of screw driver or screws since the task can be invariantly 
+defined as a relationship between tooltip and the screw top.</p>
+
+<p><img src="/assets/images/human_task_specification.png" alt="human_task_specification" class="center" /></p>
+
+<p>Human empirically has a good sense of “what is the task”, as studied in observational learning<a href="#c20">[20]</a> in psychology, 
+the rapid grasp of task concept by simply watching adults or peers during a human infant’s cognitive developmental process is astonishing. 
+Generally, there are two types of structures for task specification used by humans:</p>
+<ul>
+  <li>(1) A semantic structure that conceptually describes how a task should be organized, for example a recipe defines how to make a pizza.</li>
+  <li>(2) A geometric structure that solidly defines spatial information of a task, for example a tenon assembly task without any nails.</li>
+</ul>
+
+<p>Similarly, the above two structures are applied in robotic research. The semantic approach is intensively studied in ontology and affordance based methods<a href="#c11">[11]</a> which describe a task in a tree of 
+graph structure based on objects,  attributes and their functionalities. 
+However, the mapping from semantic task concepts to robot actions without hand-engineered motion primitives remains challenging. 
+The geometric approach<a href="#c12">[12]</a><a href="#c13">[13]</a>, as a comparison, defines a task by object spatial relationships, geometric constraints 
+(point-coincidence, line-parallel, etc.) and their chaining to construct more complex tasks<a href="#c16">[16]</a>. 
+Besides the advantage of task interpretability, it provides a way to monitor task execution and relates directly to 
+robot control as studied in visual servoing<a href="#c19">[19]</a>. However, this approach is <strong>rarely studied</strong>.</p>
+
+<h4 id="making-sense-of-vision-by-visual-feature-connections"><strong>Making Sense of Vision by Visual Feature Connections</strong></h4>
+
+<p><img src="/assets/images/chapter_1_intro.png" alt="chapter_1_intro" class="center" /></p>
+
+<p>Using geometry and spatial sense to define a manipulation task, is essentially using a 
+predefined structure to make connections between objects and geometric features (object parts), 
+in order to make sense of what has been seen. The above figure shows 17 examples of how 
+geometry and spatial sense applies in various manipulation, gaming, autonomous driving 
+and collision avoidance tasks.</p>
+
+<p><strong>The theme of this research</strong> is to introduce geometry and spatial sense as a structured task representation in robot learning, for the purpose of improving 
+state-of-art robotic task specification capabilities.</p>
+
+<h2 id="2-learning-geometry-and-spatial-sense-from-vision">2. Learning Geometry and Spatial Sense from Vision</h2>
+
+<p>So far, we’ve discussed general ideas of representing a robotic task based on geometry and spatial sense, which are essentially making feature connections as discussed above.
+To ground our discussion, three questions arise:</p>
+<ul>
+  <li>(1): how to parameterize geometry and spatial sense in an end-to-end trainable manner that is scalable to encode any forms of visual feature connections;</li>
+  <li>(2): how to relate such parameterization to a task definition in an unsupervised manner, without human annotated samples;</li>
+  <li>(3): what benefits will such structured task representation bring to us, regarding learning efficiency, generalization, intepretability and so on.</li>
+</ul>
+
+<p>Intuitively, there are three learning paradigms can be used to learn such task encoding:</p>
+
+<ul>
+  <li>(1) A supervised learning approach using human annotated samples, but requires intimidating word load for each task which is not practical.</li>
+  <li>(2) An reinforcement learning (RL) approach using reward as task definition and geometry as inductive bias in the state representation, but requires numerous robot environment interactions which is not practical either.</li>
+  <li>(3) An unsupervised learning approach using 3rd-view human demonstration video performing the task, but requires unsupervised clues to relate the structured task encoding to task definition.</li>
+</ul>
+
+<p><img src="/assets/images/Our_approach.png" alt="Our_approach" class="center" style="width: 90%;" />
+In this research, we propose a series of unsupervised learning methods to directly learn task 
+representation from 3rd-view human demonstration videos. Through examples of various manipulation tasks, we prove introducing geometry structure in robot learning will largely
+reduce needed human demonstrations, improving learning efficiency, showing better generalization performance, and the learned geometric task repressentation provides decidability,
+diagnosability and controllability.</p>
 
 <p><br /></p>
 
@@ -137,7 +226,7 @@ The above figure shows a systematical view of how a spatial task encoder is lear
 
 <p>Successively, we explore further from learning object-level spatial sense to a more fine-grained task representation framework—using geometric constraints, 
 i.e., connections between geometric features / primitives, which we refer as geometry skills. This approach of robotic task representation was originally studied in 
-visual servoing litetratures<a href="#c1">[1]</a><a href="#c2">[2]</a><a href="#c3">[3]</a><a href="#c4">[4]</a> which rely on human hand selected features. We propose to directlyl learn geometric feature constraints as a task encoding, and based on which, 
+visual servoing litetratures<a href="#c12">[12]</a><a href="#c13">[13]</a><a href="#c14">[14]</a><a href="#c15">[15]</a> which rely on human hand selected features. We propose to directlyl learn geometric feature constraints as a task encoding, and based on which, 
 to learn an optimal selector instead of a hand engineered one.</p>
 
 <p><img src="/assets/images/chapter4_overview_small.png" alt="chapter4_overview_small" class="center" /></p>
@@ -206,19 +295,140 @@ represent the early, middle and final training stages respectively. Then the sam
 from the selected top feature connections. To do this, we had the robot perform the task via teleoperation, then record video frames. Results show that we are actually
 optimizing the encoder, selector to produce “good” control signals.</p>
 
-<h2 id="references">References</h2>
+<h2 id="5-learning-invariant-task-descriptors">5. Learning Invariant Task Descriptors</h2>
 
-<p><a id="c12">[1]</a>
+<p><img src="/assets/images/chapter5_invariant_geometry_small.png" alt="chapter5_invariant_geometry_small" /></p>
+
+<p>In this section, we keep exploring how a geometry-structured task encoding <script type="math/tex">Z</script> will <strong>generalize across tasks with categorical objects</strong>. The term “categorical” 
+means objects share the same functional parts that relate to a task definition. For example, in an open-bottle-cap task, the cap of various bottles is the shared functional parts,
+and the task definition stays the same by relating gripper fingers to the caps. What insights can this bring to us?</p>
+
+<h4 id="51--task-specification-invariance"><strong>5.1  Task Specification Invariance</strong></h4>
+
+<p>Commonly, a task has two parts: a <em>“what”</em> specifies the task and a <em>“how”</em> drives task execution. 
+One interesting characteristic of a manipulation tasks’s <em>“what”</em> is its consistency in the time domain that it won’t change during task execution, 
+consistency across different task executors that it won’t change from human to robot, consistency in object categories that it won’t change because of different textured objects, 
+consistency in different environmental settings that it won’t change given different backgrounds, illuminations and initial conditions. We call it as <strong>“Task Specification Invariance”</strong>.</p>
+
+<p><img src="/assets/images/chapter5_real_tasks.png" alt="chapter5_real_tasks" class="center" style="width:98%;" /></p>
+
+<p>When looking from a geometry perspective, it means that the relational parts of objects form an invariant task 
+representation. For example (A), the screw driver’s functional part is always a pen tip regardless of what size, color 
+of a screw driver it is. The screwing task is always the relationship between its pen tip to the screw top, 
+and its vertical direction to the screw body. For another example (B), the book organizing task needs always look at the relationship
+of a book edge to the vertical line of book piles, regardless of what kind of book (size, texture) it is. 
+To this end, readers probably realized the relationship in geometry feature level between object-robot gripper, 
+object-object is the key for manipulation task representation.</p>
+
+<h4 id="52--approach-expert-orderness-assumption--task-representation-consistency"><strong>5.2  Approach: Expert Orderness Assumption + Task Representation Consistency</strong></h4>
+
+<p>As a result, representing a manipulation task using relational parts of the objects brings the insight of invariant task representation 
+which is crucial for robot learning in order to generalize well. We propose to introduce geometry as inductive bias to learn an invariant task representations.
+Specifically, given 3rd-view human demonstration videos performing the same task with different objects,  we aim to optimize a graph structured encoder and selector
+that selects connections between functional parts of objects, as an invariant task representation.</p>
+
+<p><img src="/assets/images/chapter5_optimization.png" alt="chapter5_optimization" class="center" /></p>
+
+<p>We propose an approach utilizing the <strong>“Expert Orderness Assumption on Categorial Objects”</strong> defined as: Given several human demonstration videos of performing 
+the same task but with categorical objects:</p>
+<ul>
+  <li>(1) the temporal order of frame transitions of each video near-optimally defines the task,</li>
+  <li>(2) the task descriptor <script type="math/tex">\mathbf{Z}^{\mathbb{G}}_{i}</script> of each video stays consistent, where <script type="math/tex">\mathbb{G}</script> defines the prior geometry structure.</li>
+</ul>
+
+<h4 id="53--evaluation"><strong>5.3  Evaluation</strong></h4>
+<p><img src="/assets/images/sapien.png" alt="sapien" /></p>
+
+<p>To evaluate our proposed method, we design a table organization task in a Sapien simulator<a href="#c17">[17]</a>. The task is to organize messy items on a table in a neat way. It was 
+firstly introduced in IROS 2020 as a manipulation challenge called “Open Cloud Robot Table Organization Challenge” (OCRTOC)<a href="#c18">[18]</a>. In OCRTOC, an organization task is defined by specifying 
+each object’s target pose w.r.t. the table, which is quite cumbersome. In this work, we change it to a more natural setting: human demonstrate the organization task using different object
+instances, robot is requried to learn the task that generalizes to categorical objects. Under this new setting, the robot is required to organize books, mugs in a neat way 
+regardless of what books or mugs it is manipulating. As a result, it’s suitable for the study of categorical object generalization.</p>
+
+<h4 id="54--summary"><strong>5.4  Summary</strong></h4>
+
+<p>We aim to investigate the following research questions:</p>
+<ul>
+  <li><strong>Methodology</strong>:
+    <ul>
+      <li>Given a set of 3rd-view human demonstration videos of different objects, how should we learn an invariant task descriptor?</li>
+      <li>How does a geometry structured task priori <script type="math/tex">\mathbb{G}</script> helps compared to directly learn from image pixels?</li>
+    </ul>
+  </li>
+  <li><strong>Controllability</strong>: Does the output geometric loss provide controllability?
+    <ul>
+      <li>In a calibrated scenario, does the output directly apply in a visual servoing controller?</li>
+      <li>In an uncalibrated scenario, does the output enable efficient learning of a controller using reinforcement learning?</li>
+    </ul>
+  </li>
+  <li><strong>Applicability and Generalization</strong>: What kind of tasks does the above method work?
+    <ul>
+      <li>What kind of geometry structured task priori <script type="math/tex">\mathbb{G}</script> does it work? For example, does it work for a line-to-line task? How about a point-to-line task, etc.?</li>
+      <li>What categorical objects does it work? What’s the definition of categorical objects? For example, does it work for different shaped cups but with low image textures? Does it work for same shaped books but with hugely different textures?</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="references">References</h2>
+<p><a id="c1">[1]</a> 
+Samson, Claude, Bernard Espiau, and Michel Le Borgne. Robot control: the task function approach. Oxford University Press, Inc., 1991.</p>
+
+<p><a id="c2">[2]</a> 
+Samson, C., and B. Espiau. “Application of the task-function approach to sensor-based control of robot manipulators.” IFAC Proceedings Volumes 23.8 (1990): 269-274.</p>
+
+<p><a id="c3">[3]</a>
+Sutton, Richard S., and Andrew G. Barto. Reinforcement learning: An introduction. MIT press, 2018.</p>
+
+<p><a id="c4">[4]</a>
+Levine, Sergey, et al. “End-to-end training of deep visuomotor policies.” The Journal of Machine Learning Research 17.1 (2016): 1334-1373.</p>
+
+<p><a id="c5">[5]</a>
+Argall, Brenna D., et al. “A survey of robot learning from demonstration.” Robotics and autonomous systems 57.5 (2009): 469-483.</p>
+
+<p><a id="c6">[6]</a>
+Pathak, Deepak, et al. “Zero-shot visual imitation.” Proceedings of the IEEE conference on computer vision and pattern recognition workshops. 2018.</p>
+
+<p><a id="c7">[7]</a>
+Xu, Danfei, et al. “Neural task programming: Learning to generalize across hierarchical tasks.” 2018 IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2018.</p>
+
+<p><a id="c8">[8]</a>
+Yang, Yezhou, et al. “Robot learning manipulation action plans by” watching” unconstrained videos from the world wide web.” Proceedings of the AAAI Conference on Artificial Intelligence. Vol. 29. No. 1. 2015.</p>
+
+<p><a id="c9">[9]</a>
+Xiong, Caiming, et al. “Robot learning with a spatial, temporal, and causal and-or graph.” 2016 IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2016.</p>
+
+<p><a id="c10">[10]</a>
+Sieb, Maximilian, et al. “Graph-structured visual imitation.” Conference on Robot Learning. PMLR, 2020.</p>
+
+<p><a id="c11">[11]</a>
+Paulius, David, and Yu Sun. “A survey of knowledge representation in service robotics.” Robotics and Autonomous Systems 118 (2019): 13-30.</p>
+
+<p><a id="c12">[12]</a>
 Chaumette, François. “Visual servoing using image features defined upon geometrical primitives.” Proceedings of 1994 33rd IEEE Conference on Decision and Control. Vol. 4. IEEE, 1994.</p>
 
-<p><a id="c13">[2]</a>
+<p><a id="c13">[13]</a>
 Dodds, Zachary, et al. “Task specification and monitoring for uncalibrated hand/eye coordination.” Proceedings 1999 IEEE International Conference on Robotics and Automation (Cat. No. 99CH36288C). Vol. 2. IEEE, 1999.</p>
 
-<p><a id="c14">[3]</a>
+<p><a id="c14">[14]</a>
 Hager, Gregory D., and Zachary Dodds. “On specifying and performing visual tasks with qualitative object models.” Proceedings 2000 ICRA. Millennium Conference. IEEE International Conference on Robotics and Automation. Symposia Proceedings (Cat. No. 00CH37065). Vol. 1. IEEE, 2000.</p>
 
-<p><a id="c15">[4]</a>
+<p><a id="c15">[15]</a>
 Hespanha, João Pedro, et al. “What tasks can be performed with an uncalibrated stereo vision system?.” International Journal of Computer Vision 35.1 (1999): 65-85.</p>
+
+<p><a id="c16">[16]</a>
+Dodds, Zachary, et al. “A hierarchical vision architecture for robotic manipulation tasks.” International Conference on Computer Vision Systems. Springer, Berlin, Heidelberg, 1999.</p>
+
+<p><a id="c17">[17]</a>
+UCSD. Sapien project, “https://sapien.ucsd.edu/”, 2020.</p>
+
+<p><a id="c18">[18]</a>
+OCRTOC. Open cloud robot table organization challenge (ocrtoc), “http://www.ocrtoc.org/”, 2020.</p>
+
+<p><a id="c19">[19]</a>
+Hutchinson, Seth, Gregory D. Hager, and Peter I. Corke. “A tutorial on visual servo control.” IEEE transactions on robotics and automation 12.5 (1996): 651-670.</p>
+
+<p><a id="c20">[20]</a>
+Burke, Christopher J., et al. “Neural mechanisms of observational learning.” Proceedings of the National Academy of Sciences 107.32 (2010): 14431-14436.</p>
 
   </div>
 

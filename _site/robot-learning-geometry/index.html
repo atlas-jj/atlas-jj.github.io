@@ -50,14 +50,6 @@
           
         
           
-          <a class="page-link" href="/robot-learning-geometry/introduction/">Introduction</a>
-          
-        
-          
-          <a class="page-link" href="/robot-learning-geometry/tutorial/">Tutorial</a>
-          
-        
-          
           <a class="page-link" href="/robot-learning-geometry/proposal/">Proposal</a>
           
         
@@ -85,17 +77,17 @@
 
   <div class="post-content">
     <div style="text-align:center;">
-<a href="/robot-learning-geometry/" class="active_href">Cover Page</a> &nbsp;| &nbsp;  <a href="/robot-learning-geometry/introduction/">Introduction</a> &nbsp; | &nbsp;  <a href="/robot-learning-geometry/tutorial">Tutorial</a>&nbsp;| &nbsp;  <a href="/robot-learning-geometry/proposal">Proposal</a>
+<a href="/robot-learning-geometry/" class="active_href">Cover Page</a> &nbsp;| &nbsp;  <a href="/robot-learning-geometry/proposal">Proposal</a> &nbsp;| &nbsp;  <a href="https://drive.google.com/file/d/1BKSSB_I4QKHJGo9CYc8nuqQ_w-VzECEp/view?usp=sharing">PDF Draft</a>
 </div>
 <h6 class="page-author">Jun Jin <br /> Robotics &amp; Vision Lab, Computing Science, University of Alberta</h6>
 
 <p><br /></p>
 
-<p>Are there any general solutions to parameterize robotic manipulation tasks? The answer is probably no, even if a parameterization exists,
+<p>Does a general solution to parameterize robotic manipulation tasks exist? The answer is probably no, and even if such a parameterization exists,
 it is difficult to find because manipulation tasks are too complex in general—various task setting can range from household,  production line, 
 disaster mitigation and so many as you could mention.</p>
 
-<p>Among the various manipulation tasks, in this research, we are interested in those that can be generally parameterized using geometric constraints.</p>
+<p>This research focuses on the problem of robotic task specification. Among the various manipulation tasks, we are interested in those that can be generally parameterized using geometric constraints.</p>
 
 <p><img src="/assets/images/screw_driver_task.png" alt="screw_driver_task" class="center" style="width:70%;" /></p>
 
@@ -122,8 +114,8 @@ constraint, and outputs an encoding as the task representation, the generalizati
 
 <p><img src="/assets/images/levine_compare.png" alt="levine_compare" class="center" style="width:100%;" /></p>
 
-<p>As a result, our approach is essentially introducing a geometry structured prior to the problem of robotic task learning. This aligns with the seminar paper
-from S. Levine et al. 2016, GPS paper <a href="#c1">[1]</a> that a spatial softmax operator select task relevant key points along the optimization of deep RL training. 
+<p>As a result, our approach is essentially introducing a geometry structured prior to the problem of robotic task learning. This aligns with the work
+from S. Levine et al. 2016, the GPS paper <a href="#c1">[1]</a> that a spatial softmax operator selects task relevant key points along the optimization of deep RL training. 
 But this is different that the introduced geometry structure enforce the selection based on task-relevant feature relationships instead of individual features.
 As shown in the figure A above, in <a href="#c1">[1]</a>, the feature encoder may accidentally output key points that is not on the manipulated objects but rather on the robot
 end-effector, while our methods selects more consistent and task relevant feature connections.</p>
