@@ -48,8 +48,8 @@ constraint, and outputs an encoding as the task representation, the generalizati
 As a result, our approach is essentially introducing a geometry structured prior to the problem of robotic task learning. This aligns with the work
 from S. Levine et al. 2016, the GPS paper [[1]](#c1) that a spatial softmax operator selects task relevant key points along the optimization of deep RL training. 
 But this is different that the introduced geometry structure enforce the selection based on task-relevant feature relationships instead of individual features.
-As shown in the figure A above, in [[1]](#c1), the feature encoder may accidentally output key points that is not on the manipulated objects but rather on the robot
-end-effector, while our methods selects more consistent and task relevant feature connections.
+As shown in the figure (A) above, in [[1]](#c1), the feature encoder may accidentally output key points that is not on the manipulated objects but rather on the robot
+end-effector, while our methods selects more consistent and task relevant feature connections (B).
 
 __The second insight__ is that, if the learned task representation is indeed encoding task relevant information, then the controller design should be made easier, which means
 learning a "good what" to enable efficient and generalizable "how".
