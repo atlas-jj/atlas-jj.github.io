@@ -22,9 +22,9 @@ disaster mitigation and so many as you could mention.
 
 Among the various manipulation tasks, in this research, we are interested in those that can be generally parameterized using geometric constraints. 
 
-<img src= "{{ BASE_PATH }}/assets/images/screw_driver_task.png" alt="screw_driver_task" class="center" style="width:60%;"/>
+<img src= "{{ BASE_PATH }}/assets/images/screw_driver_task.png" alt="screw_driver_task" class="center" style="width:70%;"/>
 
-In robotics, representing a task using connections between geometric features / primivies
+In robotics, representing a task using connections between geometric features / primitives
 was studied in the literature of visual servoing. Such geometric constraints generally applied in a wide range of manipulation tasks and make
 precise manipulation control possible. For example, in the figure above, a screwing task can be specified by points and lines constraint that makes
 a controller design to fulfil the task. There are a wide range of manipulation tasks that can be represented using such geometric constraints since objects in our surroundings are made from regular 
@@ -38,14 +38,13 @@ So why should we study geometric constraints in the era of robot learning? What 
 <img src= "{{ BASE_PATH }}/assets/images/generalizables.png" alt="generalizables" class="center"  style="width:80%;"/> 
  
 
-The first insight is that, if we see geometric constraints as a way to represent a task, we will get task specification invariance which indicates
+__The first insight__ is that, if we see geometric constraints as a way to represent a task, we will get __task specification invariance__ which indicates
 the definition of a task stays invariant across different environments or categorical objects.  As shown in the figure below, a geometry structured task representation stays invariant regardless of types of screw drivers or screws. 
- Likewise, the openning cap task depends on point constraints that are invariant to different types of bottles.
+ Likewise, the openning cap task depends on point constraints that are invariant to different types of bottles. If we further form it as a robotic task representation learning problem, which means we aim to learn an encoder that takes input of such geometric
+constraint, and outputs an encoding as the task representation, the generalization problem turns to learning a consistent task representation problem.
 
 <img src= "{{ BASE_PATH }}/assets/images/generalizables.png" alt="generalizables" class="center"  style="width:80%;"/> 
 
-If we further form it as a robotic task representation learning problem, which means we aim to learn an encoder that takes input of such geometric
-constraint, and outputs an encoding as the task representation, the generalization problem turns to learning a consistent task representation problem.
 
 As a result, our approach is essentially introducing a geometry structured prior to the problem of robotic task learning. This aligns with approaches from S. Levine et al. and
 Qin et al. that a spatial softmax operator of keypoint filter layer is applied along the optimization of deep RL training. But this is different with a attentional
