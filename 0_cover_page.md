@@ -39,7 +39,3 @@ a geometry structured task representation stays invariant regardless of types of
 point constraints that are invariant to different types of bottles. 
 - (3) controllability that the virtual linkage makes model based control and efficient learning possible, as shown in the figure below.
 
-
-<img src= "{{ BASE_PATH }}/assets/images/learning_good_what.png" alt="learning_good_what" class="center"  style="width:70%;"/> 
-
-
