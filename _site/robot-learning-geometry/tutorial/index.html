@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Tutorial</title>
+  <meta name="description" content="Welcome to our site!
+">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="canonical" href="http://yourdomain.com/robot-learning-geometry/tutorial/">
+  <link rel="alternate" type="application/rss+xml" title="Robot Learning Geometry" href="http://yourdomain.com/feed.xml">
+  <!-- for mathjax support -->
+    
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/robot-learning-geometry/">Robot Learning Geometry</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/robot-learning-geometry/">Cover Page</a>
+          
+        
+          
+          <a class="page-link" href="/robot-learning-geometry/introduction/">Introduction</a>
+          
+        
+          
+          <a class="page-link" href="/robot-learning-geometry/tutorial/">Tutorial</a>
+          
+        
+          
+          <a class="page-link" href="/robot-learning-geometry/proposal/">Proposal</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="page-title-custom">Learning Geometry and Spatial Sense from Vision for Robotic Manipulation</h1>
+  </header>
+
+  <div class="post-content">
+    <div style="text-align:center;">
+<a href="/robot-learning-geometry/">Cover Page</a> &nbsp;| &nbsp;  <a href="/robot-learning-geometry/introduction/">Introduction</a> &nbsp; | &nbsp;  <a href="/robot-learning-geometry/tutorial" class="active_href">Tutorial</a>&nbsp;| &nbsp;  <a href="/robot-learning-geometry/proposal">Proposal</a>
+</div>
+<h6 class="page-author">Jun Jin <br /> Robotics &amp; Vision Lab, Computing Science, University of Alberta</h6>
+
+<p><br /></p>
+
+<h2 id="3-learning-object-level-spatial-sense">3. Learning Object Level Spatial Sense</h2>
+
+<p><img src="/assets/images/chapter3_overview.png" alt="chapter3_overview" class="center" /></p>
+
+<p>Let’s begin by exploring how to learn object-level spatial sense from 3rd-view human demonstration videos. This work has been published as
+<a href="https://ieeexplore.ieee.org/document/8793649" target="_blank"><em>“Robot Eye-hand Coordination Learning by Watching Human Demonstrations: a Task Function Approach”</em></a>, which appeared as a conference paper in 
+<em>“2019 IEEE International Conference on Robotics and Automation (ICRA)”</em>.</p>
+
+<p>The basic idea is quite simple: since the most significant source of observed pixel changes <script type="math/tex">(S_{t} \rightarrow S_{t+1})</script> is the spatial information variants
+caused by human or robot action, is it possible to <strong>retrieve the spatial information from such a state change tuple <script type="math/tex">(S_{t}, S_{t+1})</script></strong>?</p>
+
+<p><img src="/assets/images/chapter3_encoding_orderness.png" alt="chapter3_encoder_orderness" /></p>
+
+<p>Suppose we observe an image state <script type="math/tex">S_{t}</script> at time t and apply action <script type="math/tex">a_{t}</script> which leads to the next image state <script type="math/tex">S_{t+1}</script>. 
+Suppose a state change tuple is parameterized as <script type="math/tex">ds_{t} = f(S_{t}, S_{t+1})</script>, where <script type="math/tex">f</script> can be a simple two-state subtraction or a 
+neural network. Let <script type="math/tex">\mathbf{R_{t}} \in \mathbb{R}^{d}</script> denote the spatial information retrieved by a task encoder function defined as:</p>
+
+<script type="math/tex; mode=display">\mathbf{R_{t}} = {E}_{\mathbf{\theta}}(ds_{t}|a_{t})</script>
+
+<!---
+, where $$\mathbf{\theta}$$ are the parameters of task encoder function, and $$a_{t}$$ is a _generic action_ which defines any actions that will cause state change $$ds_{t}$$ regardless of human or robot specific actions. 
+This definition of $$a_{t}$$ circumvents the _correspondence problem_ as studied in learning from demonstration (LfD) literature~\cite{argall2009survey} 
+without knowing a specific action format since we directly study motion outcomes across a human demonstrator and a robot imitator. 
+Then $$a_{t}$$ is implicitly represented in $$ds_{t}$$ thus can be removed in later optimization. 
+--->
+<p>Now the problem becomes: how to optimize 
+<script type="math/tex">{E}_{\theta}</script> given a set of 3rd-view human demonstration videos so that its output <script type="math/tex">\mathbf{R_{t}}</script> defines the task? 
+Our solution is the introduced <strong>“Expert Orderness Assumption”</strong> that: 
+<code class="highlighter-rouge">given a sequence of human demosntration video frames, the temporal order of frame transitions near-optimally defines
+the task.</code> This assumption guides the unsupervised learning from human demonstration videos, which is proposed as <em>InMaxEntIRL</em>.
+<!---
+The term "near-optimally" refers to the fact that not all human demonstrators are perfect expert, which is similar to imperfect expert demonstration issues as studied in
+inverse reinforcement learning (IRL) literature. So 
+---></p>
+
+<p><a href="https://www.youtube.com/watch?v=KXQbUPw4iw0&amp;ab_channel=JunJin" target="_black"><img src="/assets/images/ICRA2019_video_play.png" class="center" /></a></p>
+
+<p>So how it works? In the above stacking blocks task, results show that learning a spatial task encoding enables a moderate success rate given only a small number (1~10) of
+human demonstration video samples, and exhibits strong generalization performance regarding task/environment changes.</p>
+
+<p><img src="/assets/images/chapter3_vis_encoding.png" alt="chapter3_vis_encoding" class="center" style="width:80%;" /></p>
+
+<p>Lastly, we examine what exactly has the spatial task encoder learned. We visualize the learned spatial task encoding by collecting samples from a human 
+kinesthetic teaching process, then visualize the norm of spatial task encoding output <script type="math/tex">R_{t}</script> using a color map. The figure above shows the colored sphere indicating
+a tendency towards the 3D target.</p>
+
+<p><img src="/assets/images/system_overview3.png" alt="system_overview3" class="center" />
+The above figure shows a systematical view of how a spatial task encoder is learned and how to apply the output <script type="math/tex">R_{t}</script> in a closed-loop controller.</p>
+
+<h2 id="4-learning-geometry-skills">4. Learning Geometry Skills</h2>
+
+<p>Successively, we explore further from learning object-level spatial sense to a more fine-grained task representation framework—using geometric constraints, 
+i.e., connections between geometric features / primitives, which we refer as geometry skills. This approach of robotic task representation was originally studied in 
+visual servoing litetratures<a href="#c1">[1]</a><a href="#c2">[2]</a><a href="#c3">[3]</a><a href="#c4">[4]</a> which rely on human hand selected features. We propose to directlyl learn geometric feature constraints as a task encoding, and based on which, 
+to learn an optimal selector instead of a hand engineered one.</p>
+
+<p><img src="/assets/images/chapter4_overview_small.png" alt="chapter4_overview_small" class="center" /></p>
+
+<p>This work has been published as two papers: <a href="https://ieeexplore.ieee.org/document/9196570" target="_blank">
+<em>“Visual Geometric Skill Inference by Watching Human Demonstration”</em></a> appeared as a conference paper in 
+<em>“2020 IEEE International Conference on Robotics and Automation (ICRA)”</em>, and <a href="https://ieeexplore.ieee.org/document/9196570" target="_blank">
+<em>“A Geometric Perspective on Visual Imitation Learning”</em></a> in <em>“2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)”</em>.</p>
+
+<!---
+Reasons are three folds: (1) An optimal feature connection selector can select feature connections dirrectly 
+ from $$\mathcal{F}$$, thus avoiding human hand selection and feature tracking; (2)  Encoding feature connections directly can utilize the rich representation power of deep neural networks;
+(3) Encoding feature connections directly can be seen as learning a task representation. It provides the possibility to learn invariant task representations that stay consistent during task execution, 
+across environmental settings and categorical objects. We will explore that in the next section.
+--->
+
+<!---
+This approach of manipulation task representation is based on two assumptions:
+(1) a task that can be defined by connections between geometric features on robot end feectors, tools and objects; (2) and all the features can be simutaneously observed in the same camera system.
+The above assumption, though limits its applicability, can still cover a wide range of manipulation tasks, for example: non-prehensible tasks --- command the manipulator reaching a target
+pose or changing object states, and prehensible tasks --- command the manipulator using tools to change object states.
+--->
+
+<p><img src="/assets/images/chapter4_task_relevance_selector.png" alt="chapter4_task_relevance_selector" class="center" /></p>
+
+<p>In our approach, feature connections are represented as vectors <script type="math/tex">Z_{i}</script> by an encoder function <script type="math/tex">E_{k}</script>. And a selector <script type="math/tex">U_{k}</script> selects
+feature connections based on their task-relevance probability, which is computed from <script type="math/tex">Z_{i}</script>. As a result, it forms a differentiable stream from feature connections
+to their task-relevance probability. Now the question is how to parameterize an encoder <script type="math/tex">E_{k}</script>?</p>
+
+<p><img src="/assets/images/chapter4_two_graph_types.png" alt="chapter4_two_graph_types" /></p>
+
+<p><script type="math/tex">E_{k}</script> is essentially a relationship encoder. We propose two types of parameterzation methods based on graph neural networks (GCN). The reasons why using a GCN are: 
+ (1) it’s <strong>permutation-invariant</strong> that the output <script type="math/tex">Z</script> is invariant to input
+feature orders; (2) it’s <strong>scalable</strong> that can define complex relationships. How should we optimize the encoder and selector given a human demonstration video?</p>
+
+<p><img src="/assets/images/chapter4_InMaxEntIRL.png" alt="chapter4_InMaxEntIRL" class="center" /></p>
+
+<p>To optimize the encoder <script type="math/tex">E_{k}</script> and selector <script type="math/tex">U_{k}</script>, we continue to use the <em>“expert orderness assumption”</em>
+with a changed <script type="math/tex">r_{t}</script> definition based on geometric loss computed from geometric constraints. 
+ <!---
+Type __A__ are feature descriptor based graphs which rely on hand crafted feature descriptors. 
+However it limits its applicability since efficient feature descriptors for complex geometric primitives (line, conics) are difficult to design. Type __B__ removes this limitation by
+using generalized image patch based graphs, which take a fixed dimension of image patches as input and utilize the rich representation power of deep neeural networks. As a results, deep
+feature are learned as the encoder being optimized.
+---></p>
+
+<p><a href="https://www.youtube.com/watch?v=NnZM5ZsKc1s&amp;ab_channel=JunJin" target="_black"><img src="/assets/images/learning_geometry_cover.png" class="center" /></a></p>
+
+<p>So how does it work? We show that, instead of learning actions from image pixels, learning a geometry-parameterized task concept provides an explainable and invariant representation across
+demonstrator to imitator under various environmental settings.</p>
+
+<!---
+<img src= "/assets/images/chapter4_five_tasks.jpg" alt="chapter4_five_tasks" class="center"/>
+<img src= "/assets/images/chapter4_human_robot.png" alt="chapter4_human_robot" class="center"/>
+<img src= "/assets/images/chapter4_generalization_results_small-min.png" alt="chapter4_generalization_results_small-min" class="center"/>
+[chapter4_generalization_setup](/assets/images/chapter4_generalization_setup.jpg)
+[chapter4_generalization_results](/assets/images/chapter4_generalization_results.png)
+The table above shows evaluation results under environmental / task setting changes. Compared to a hand-feature selection and tracking (hand-tracking) method,
+this approach learns an optimal selector that directly selects feature connections based on their task relevance.
+-->
+
+<p><img src="/assets/images/fig8_IROS.png" alt="fig8_IROS" class="center" /></p>
+
+<p>Lastly, we examine what has been optimized given a human demonstration video. We save snapshots of the learned encoder model at three different training stages: S1, S2, and S3 
+represent the early, middle and final training stages respectively. Then the same robot video is fed into the three model snapthos and outputs the time-series geometric loss
+from the selected top feature connections. To do this, we had the robot perform the task via teleoperation, then record video frames. Results show that we are actually
+optimizing the encoder, selector to produce “good” control signals.</p>
+
+<h2 id="references">References</h2>
+
+<p><a id="c12">[1]</a>
+Chaumette, François. “Visual servoing using image features defined upon geometrical primitives.” Proceedings of 1994 33rd IEEE Conference on Decision and Control. Vol. 4. IEEE, 1994.</p>
+
+<p><a id="c13">[2]</a>
+Dodds, Zachary, et al. “Task specification and monitoring for uncalibrated hand/eye coordination.” Proceedings 1999 IEEE International Conference on Robotics and Automation (Cat. No. 99CH36288C). Vol. 2. IEEE, 1999.</p>
+
+<p><a id="c14">[3]</a>
+Hager, Gregory D., and Zachary Dodds. “On specifying and performing visual tasks with qualitative object models.” Proceedings 2000 ICRA. Millennium Conference. IEEE International Conference on Robotics and Automation. Symposia Proceedings (Cat. No. 00CH37065). Vol. 1. IEEE, 2000.</p>
+
+<p><a id="c15">[4]</a>
+Hespanha, João Pedro, et al. “What tasks can be performed with an uncalibrated stereo vision system?.” International Journal of Computer Vision 35.1 (1999): 65-85.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+<!--    <h2 class="footer-heading">Robot Learning Geometry</h2>-->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+<!--          <li>Robot Learning Geometry</li>-->
+          <li><a href="mailto:jjin5@ualberta.ca">jjin5@ualberta.ca</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/atlas-jj"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">atlas-jj</span></a>
+
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to our site!
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

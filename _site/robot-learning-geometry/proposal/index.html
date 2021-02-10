@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Proposal</title>
+  <meta name="description" content="Welcome to our site!
+">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="canonical" href="http://yourdomain.com/robot-learning-geometry/proposal/">
+  <link rel="alternate" type="application/rss+xml" title="Robot Learning Geometry" href="http://yourdomain.com/feed.xml">
+  <!-- for mathjax support -->
+    
+      <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+        });
+      </script>
+      <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/robot-learning-geometry/">Robot Learning Geometry</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/robot-learning-geometry/">Cover Page</a>
+          
+        
+          
+          <a class="page-link" href="/robot-learning-geometry/introduction/">Introduction</a>
+          
+        
+          
+          <a class="page-link" href="/robot-learning-geometry/tutorial/">Tutorial</a>
+          
+        
+          
+          <a class="page-link" href="/robot-learning-geometry/proposal/">Proposal</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="page-title-custom">Learning Geometry and Spatial Sense from Vision for Robotic Manipulation</h1>
+  </header>
+
+  <div class="post-content">
+    <div style="text-align:center;">
+<a href="/robot-learning-geometry/">Cover Page</a> &nbsp;| &nbsp;  <a href="/robot-learning-geometry/introduction/">Introduction</a> &nbsp; | &nbsp;  <a href="/robot-learning-geometry/tutorial">Tutorial</a>&nbsp;| &nbsp;  <a class="active_href" href="/robot-learning-geometry/proposal">Proposal</a>
+</div>
+<h6 class="page-author">Jun Jin <br /> Robotics &amp; Vision Lab, Computing Science, University of Alberta</h6>
+
+<!---
+![GSD1 phenotype](/assets/images/chapter_1_intro.png)
+$$X_{1}^{2}$$
+some citations [[1]](#c1)
+-->
+
+<p><br /></p>
+<h2 id="5-learning-invariant-task-descriptors-proposed">5. Learning Invariant Task Descriptors (Proposed)</h2>
+<p><br />
+<img src="/assets/images/chapter5_invariant_geometry_small.png" alt="chapter5_invariant_geometry_small" /></p>
+
+<p>In this section, we keep exploring how a geometry-structured task encoding <script type="math/tex">Z</script> will <strong>generalize across tasks with categorical objects</strong>. The term “categorical” 
+means objects share the same functional parts that relate to a task definition. For example, in an open-bottle-cap task, the cap of various bottles is the shared functional parts,
+and the task definition stays the same by relating gripper fingers to the caps. What insights can this bring to us?</p>
+
+<h4 id="51--task-specification-invariance"><strong>5.1  Task Specification Invariance</strong></h4>
+
+<p>Commonly, a task has two parts: a <em>“what”</em> specifies the task and a <em>“how”</em> drives task execution. 
+One interesting characteristic of a manipulation tasks’s <em>“what”</em> is its consistency in the time domain that it won’t change during task execution, 
+consistency across different task executors that it won’t change from human to robot, consistency in object categories that it won’t change because of different textured objects, 
+consistency in different environmental settings that it won’t change given different backgrounds, illuminations and initial conditions. We call it as <strong>“Task Specification Invariance”</strong>.</p>
+
+<p><img src="/assets/images/chapter5_real_tasks.png" alt="chapter5_real_tasks" class="center" style="width:98%;" /></p>
+
+<p>When looking from a geometry perspective, it means that the relational parts of objects form an invariant task 
+representation. For example (A), the screw driver’s functional part is always a pen tip regardless of what size, color 
+of a screw driver it is. The screwing task is always the relationship between its pen tip to the screw top, 
+and its vertical direction to the screw body. For another example (B), the book organizing task needs always look at the relationship
+of a book edge to the vertical line of book piles, regardless of what kind of book (size, texture) it is. 
+To this end, readers probably realized the relationship in geometry feature level between object-robot gripper, 
+object-object is the key for manipulation task representation.</p>
+
+<h4 id="52--approach-expert-orderness-assumption--task-representation-consistency"><strong>5.2  Approach: Expert Orderness Assumption + Task Representation Consistency</strong></h4>
+
+<p>As a result, representing a manipulation task using relational parts of the objects brings the insight of invariant task representation 
+which is crucial for robot learning in order to generalize well. We propose to introduce geometry as inductive bias to learn an invariant task representations.
+Specifically, given 3rd-view human demonstration videos performing the same task with different objects,  we aim to optimize a graph structured encoder and selector
+that selects connections between functional parts of objects, as an invariant task representation.</p>
+
+<p><img src="/assets/images/chapter5_optimization.png" alt="chapter5_optimization" class="center" /></p>
+
+<p>We propose an approach utilizing the <strong>“Expert Orderness Assumption on Categorial Objects”</strong> defined as: Given several human demonstration videos of performing 
+the same task but with categorical objects:</p>
+<ul>
+  <li>(1) the temporal order of frame transitions of each video near-optimally defines the task,</li>
+  <li>(2) the task descriptor <script type="math/tex">\mathbf{Z}^{\mathbb{G}}_{i}</script> of each video stays consistent, where <script type="math/tex">\mathbb{G}</script> defines the prior geometry structure.</li>
+</ul>
+
+<h4 id="53--evaluation"><strong>5.3  Evaluation</strong></h4>
+
+<p><img src="/assets/images/sapien.png" alt="sapien" /></p>
+
+<p>To evaluate our proposed method, we design a table organization task in a Sapien simulator<a href="#c1">[1]</a>. The task is to organize messy items on a table in a neat way. It was 
+firstly introduced in IROS 2020 as a manipulation challenge called “Open Cloud Robot Table Organization Challenge” (OCRTOC)<a href="#c2">[2]</a>. In OCRTOC, an organization task is defined by specifying 
+each object’s target pose w.r.t. the table, which is quite cumbersome. In this work, we change it to a more natural setting: human demonstrate the organization task using different object
+instances, robot is requried to learn the task that generalizes to categorical objects. Under this new setting, the robot is required to organize books, mugs in a neat way 
+regardless of what books or mugs it is manipulating. As a result, it’s suitable for the study of categorical object generalization.</p>
+
+<h4 id="54--summary"><strong>5.4  Summary</strong></h4>
+
+<p>We aim to investigate the following research questions:</p>
+<ul>
+  <li><strong>Methodology</strong>:
+    <ul>
+      <li>Given a set of 3rd-view human demonstration videos of different objects, how should we learn an invariant task descriptor?</li>
+      <li>How does a geometry structured task priori <script type="math/tex">\mathbb{G}</script> helps compared to directly learn from image pixels?</li>
+    </ul>
+  </li>
+  <li><strong>Controllability</strong>: Does the output geometric loss provide controllability?
+    <ul>
+      <li>In a calibrated scenario, does the output directly apply in a visual servoing controller?</li>
+      <li>In an uncalibrated scenario, does the output enable efficient learning of a controller using reinforcement learning?</li>
+    </ul>
+  </li>
+  <li><strong>Applicability and Generalization</strong>: What kind of tasks does the above method work?
+    <ul>
+      <li>What kind of geometry structured task priori <script type="math/tex">\mathbb{G}</script> does it work? For example, does it work for a line-to-line task? How about a point-to-line task, etc.?</li>
+      <li>What categorical objects does it work? What’s the definition of categorical objects? For example, does it work for different shaped cups but with low image textures? Does it work for same shaped books but with hugely different textures?</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<p><a id="c1">[1]</a>
+UCSD. Sapien project, “https://sapien.ucsd.edu/”, 2020.</p>
+
+<p><a id="c2">[2]</a>
+OCRTOC. Open cloud robot table organization challenge (ocrtoc), “http://www.ocrtoc.org/”, 2020.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+<!--    <h2 class="footer-heading">Robot Learning Geometry</h2>-->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+<!--          <li>Robot Learning Geometry</li>-->
+          <li><a href="mailto:jjin5@ualberta.ca">jjin5@ualberta.ca</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/atlas-jj"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">atlas-jj</span></a>
+
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to our site!
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
